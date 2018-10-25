@@ -32,6 +32,10 @@ public class AbstractDaoImpl<T extends AbstractModel> implements InterfaceDao<T>
 
     @Override
     public T update(T modelObject) {
+        if (entityManager.find(genericClass, modelObject.getId()) == null) {
+            return null;
+        }
+
         entityManager.getTransaction().begin();
         T updatedObject = entityManager.merge(modelObject);
         entityManager.getTransaction().commit();
