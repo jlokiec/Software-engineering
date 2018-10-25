@@ -7,6 +7,7 @@
         <jta-data-source>java:/mssql-pizzeria</jta-data-source>
 
         <class>model.Address</class>
+        <class>model.Question</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
