@@ -4,17 +4,25 @@ import dao.AddressDao;
 import model.Address;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 
 @Path("/address")
 public class AddressService {
-    // paths
-    private static final String PATH_CREATE = "create";
-    private static final String PATH_UPDATE = "update";
-
     // parameters
     private static final String ID = "id";
+
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createAddress(final Address address, @Context UriInfo uriInfo) {
+        AddressDao dao = new AddressDao();
+        Address createdAddress = dao.create(address);
+
+        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+        uriBuilder.path(Integer.toString(createdAddress.getId()));
+
+        return Response.created(uriBuilder.build()).build();
+    }
 
     @GET
     @Path("/{" + ID + "}")
@@ -23,27 +31,24 @@ public class AddressService {
         AddressDao dao = new AddressDao();
         Address address = dao.read(id);
 
+        if (address == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         return Response.ok(address).build();
     }
 
-    @POST
-    @Path("/" + PATH_CREATE)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createAddress(final Address address) {
-        AddressDao dao = new AddressDao();
-        Address createdAddress = dao.create(address);
-
-        return Response.ok(createdAddress).build();
-    }
-
     @PUT
-    @Path("/" + PATH_UPDATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateAddress(final Address addressToUpdate) {
         AddressDao dao = new AddressDao();
         Address updatedAddress = dao.update(addressToUpdate);
+
+        if (updatedAddress == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
 
         return Response.ok(updatedAddress).build();
     }
@@ -52,8 +57,11 @@ public class AddressService {
     @Path("/{" + ID + "}")
     public Response deleteAddress(@PathParam(ID) int id) {
         AddressDao dao = new AddressDao();
-        dao.delete(id);
 
-        return Response.ok().build();
+        if (dao.delete(id)) {
+            return Response.ok().build();
+        }
+
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }
