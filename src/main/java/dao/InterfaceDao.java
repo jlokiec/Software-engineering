@@ -9,5 +9,5 @@ public interface InterfaceDao<T extends AbstractModel> {
 
     T update(T modelObject);
 
-    void delete(int id);
+    boolean delete(int id);
 }

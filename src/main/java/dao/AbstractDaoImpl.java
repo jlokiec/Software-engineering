@@ -40,10 +40,16 @@ public class AbstractDaoImpl<T extends AbstractModel> implements InterfaceDao<T>
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
+        if (entityManager.find(genericClass, id) == null) {
+            return false;
+        }
+
         entityManager.getTransaction().begin();
         T foundObject = entityManager.find(genericClass, id);
         entityManager.remove(foundObject);
         entityManager.getTransaction().commit();
+
+        return true;
     }
 }
