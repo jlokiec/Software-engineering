@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class AbstractDaoImpl<T extends AbstractModel> implements InterfaceDao<T> {
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
     private Class<T> genericClass;
 
     public AbstractDaoImpl(Class<T> genericClass) {
