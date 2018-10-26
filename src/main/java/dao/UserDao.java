@@ -136,7 +136,7 @@ public class UserDao extends AbstractDaoImpl<User> {
         String nick = userNickAndPassword.getNick();
         String password = userNickAndPassword.getPassword();
 
-        String sqlQuery = "select * from [pizzeria].[dbo].[user] where nick = :nick and password = :password";
+        String sqlQuery = "select * from [pizzeria].[dbo].[user] where [nick] = :nick and [password] = :password";
         Query query = entityManager.createNativeQuery(sqlQuery, User.class);
         query.setParameter("nick", nick);
         query.setParameter("password", password);
@@ -147,7 +147,6 @@ public class UserDao extends AbstractDaoImpl<User> {
             User user = users.get(0);
 
             if (user.isActive()) {
-
                 user.setLoggedIn(true);
                 update(user);
                 return true;
