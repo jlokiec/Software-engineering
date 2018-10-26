@@ -14,6 +14,7 @@ public class UserService {
     private static final String PATH_LOGGED_IN = "logged_in";
     private static final String PATH_PASSWORD = "password";
     private static final String PATH_LOGIN = "login";
+    private static final String PATH_DETAILS = "details";
     private static final String PATH_LOGOUT = "logout";
 
     // parameters
@@ -109,5 +110,17 @@ public class UserService {
         }
 
         return Response.status(Response.Status.UNAUTHORIZED).build();
+    }
+
+    @PATCH
+    @Path("/{" + ID + "}/" + PATH_DETAILS)
+    public Response updateUserDetails(final UserDetails userDetails, @PathParam(ID) int id) {
+        UserDao dao = new UserDao();
+
+        if (dao.updateDetails(userDetails, id) == null) {
+            return Response.noContent().build();
+        }
+
+        return Response.ok().build();
     }
 }
