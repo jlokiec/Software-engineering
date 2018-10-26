@@ -1,5 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -100,10 +103,12 @@ public class User extends AbstractModel {
         this.address = address;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
@@ -116,10 +121,12 @@ public class User extends AbstractModel {
         this.question = question;
     }
 
+    @JsonIgnore
     public String getAnswer() {
         return answer;
     }
 
+    @JsonProperty
     public void setAnswer(String answer) {
         this.answer = answer;
     }
