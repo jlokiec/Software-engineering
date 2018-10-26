@@ -17,6 +17,13 @@ public class UserDao extends AbstractDaoImpl<User> {
             return null;
         }
 
+        long createTimestamp = System.currentTimeMillis();
+
+        modelObject.setCreateTimestamp(createTimestamp);
+        modelObject.setUpdateTimestamp(createTimestamp);
+        modelObject.setActive(true);
+        modelObject.setLoggedIn(false);
+
         entityManager.getTransaction().begin();
         entityManager.persist(modelObject.getAddress());
         entityManager.persist(modelObject);
