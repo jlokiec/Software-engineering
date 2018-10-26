@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pizzeria.dbo.address")
+@Table(name = "[pizzeria].[dbo].[address]")
 public class Address extends AbstractModel {
     private String name;
     private String city;

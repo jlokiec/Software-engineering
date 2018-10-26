@@ -1,11 +1,13 @@
 package model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pizzeria.dbo.question")
+@Table(name = "[pizzeria].[dbo].[question]")
 public class Question extends AbstractModel {
+    @Column(nullable = false)
     private String question;
 
     public Question() {
