@@ -116,4 +116,20 @@ public class UserDao extends AbstractDaoImpl<User> {
 
         return false;
     }
+
+    public boolean logout(int id) {
+        User user = read(id);
+
+        if (user == null) {
+            return false;
+        }
+
+        if (user.isLoggedIn()) {
+            user.setLoggedIn(false);
+            update(user);
+            return true;
+        }
+
+        return false;
+    }
 }
