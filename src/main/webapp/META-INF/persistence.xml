@@ -8,6 +8,7 @@
 
         <class>model.Address</class>
         <class>model.Question</class>
+        <class>model.User</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
