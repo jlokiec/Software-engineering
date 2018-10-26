@@ -6,7 +6,7 @@ import model.Address;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
-@Path("/address")
+@Path("/addresses")
 public class AddressService {
     // parameters
     private static final String ID = "id";
