@@ -23,7 +23,6 @@ public class UserService {
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(final User user, @Context UriInfo uriInfo) {
         UserDao userDao = new UserDao();
         User createdUser = userDao.create(user);
