@@ -23,9 +23,13 @@ public class UserService {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(User user, @Context UriInfo uriInfo) {
+    public Response createUser(final User user, @Context UriInfo uriInfo) {
         UserDao userDao = new UserDao();
         User createdUser = userDao.create(user);
+
+        if (createdUser == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
         UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
         uriBuilder.path(Integer.toString(createdUser.getId()));
@@ -33,7 +37,6 @@ public class UserService {
         return Response.created(uriBuilder.build()).build();
     }
 
-    // docelowo do usunięcia
     @GET
     @Path("/{" + ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
