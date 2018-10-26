@@ -1,9 +1,10 @@
 package dao;
 
 import model.User;
-import model.patch.UserActiveOnly;
-import model.patch.UserLoggedInOnly;
-import model.patch.UserPasswordOnly;
+import model.patch.*;
+
+import javax.persistence.Query;
+import java.util.List;
 
 public class UserDao extends AbstractDaoImpl<User> {
     public UserDao() {
@@ -89,5 +90,30 @@ public class UserDao extends AbstractDaoImpl<User> {
         }
 
         return true;
+    }
+
+    public boolean login(final UserNickAndPassword userNickAndPassword) {
+        String nick = userNickAndPassword.getNick();
+        String password = userNickAndPassword.getPassword();
+
+        String sqlQuery = "select * from [pizzeria].[dbo].[user] where nick = :nick and password = :password";
+        Query query = entityManager.createNativeQuery(sqlQuery, User.class);
+        query.setParameter("nick", nick);
+        query.setParameter("password", password);
+
+        List<User> users = query.getResultList();
+
+        if (users.size() == 1) {
+            User user = users.get(0);
+
+            if (user.isActive()) {
+
+                user.setLoggedIn(true);
+                update(user);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -2,9 +2,7 @@ package service;
 
 import dao.UserDao;
 import model.User;
-import model.patch.UserActiveOnly;
-import model.patch.UserLoggedInOnly;
-import model.patch.UserPasswordOnly;
+import model.patch.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -15,6 +13,7 @@ public class UserService {
     private static final String PATH_ACTIVE = "active";
     private static final String PATH_LOGGED_IN = "logged_in";
     private static final String PATH_PASSWORD = "password";
+    private static final String PATH_LOGIN = "login";
 
     // parameters
     private static final String ID = "id";
@@ -85,5 +84,17 @@ public class UserService {
         }
 
         return Response.noContent().build();
+    }
+
+    @POST
+    @Path("/" + PATH_LOGIN)
+    public Response login(final UserNickAndPassword userNickAndPassword) {
+        UserDao dao = new UserDao();
+
+        if (dao.login(userNickAndPassword)) {
+            return Response.ok().build();
+        }
+
+        return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 }
