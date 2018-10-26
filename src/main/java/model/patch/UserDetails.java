@@ -6,7 +6,7 @@ public class UserDetails {
     private String phone;
     private String email;
 
-    public UserDetails(){
+    public UserDetails() {
 
     }
 

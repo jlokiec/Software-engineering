@@ -7,11 +7,6 @@ public class UserNickAndPassword {
     public UserNickAndPassword() {
     }
 
-    public UserNickAndPassword(String nick, String password) {
-        this.nick = nick;
-        this.password = password;
-    }
-
     public String getNick() {
         return nick;
     }
