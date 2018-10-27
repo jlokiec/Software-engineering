@@ -11,7 +11,6 @@ import javax.ws.rs.core.*;
 public class UserService {
     // paths
     private static final String PATH_ACTIVE = "active";
-    private static final String PATH_LOGGED_IN = "logged_in";
     private static final String PATH_PASSWORD = "password";
     private static final String PATH_LOGIN = "login";
     private static final String PATH_DETAILS = "details";
@@ -57,18 +56,6 @@ public class UserService {
         UserDao dao = new UserDao();
 
         if (dao.updateActive(userActiveOnly, id)) {
-            return Response.ok().build();
-        }
-
-        return Response.noContent().build();
-    }
-
-    @PATCH
-    @Path("/{" + ID + "}/" + PATH_LOGGED_IN)
-    public Response updateUserLoggedIn(final UserLoggedInOnly userLoggedInOnly, @PathParam(ID) int id) {
-        UserDao dao = new UserDao();
-
-        if (dao.updateLoggedIn(userLoggedInOnly, id)) {
             return Response.ok().build();
         }
 
