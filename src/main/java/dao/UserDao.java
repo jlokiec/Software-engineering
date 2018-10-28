@@ -50,16 +50,15 @@ public class UserDao extends AbstractDaoImpl<User> {
             return false;
         }
 
-        String newPassword = userPasswordOnly.getPassword();
-        user.setPassword(newPassword);
-
-        System.out.println(user.getPassword());
-
-        if (update(user) == null) {
-            return false;
+        if (user.isActive() && user.isAbleToChangePassword()) {
+            String newPassword = userPasswordOnly.getPassword();
+            user.setPassword(newPassword);
+            user.setAbleToChangePassword(false);
+            update(user);
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public User updateDetails(final UserDetails userDetails, int id) {
