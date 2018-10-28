@@ -26,22 +26,17 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(final User user, @Context UriInfo uriInfo) {
         UserDao userDao = new UserDao();
-        User createdUser = null;
 
         try {
-            createdUser = userDao.create(user);
+            User createdUser = userDao.create(user);
+
+            UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+            uriBuilder.path(Integer.toString(createdUser.getId()));
+
+            return Response.created(uriBuilder.build()).build();
         } catch (NickTakenException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        if (createdUser == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-
-        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-        uriBuilder.path(Integer.toString(createdUser.getId()));
-
-        return Response.created(uriBuilder.build()).build();
     }
 
     @GET
