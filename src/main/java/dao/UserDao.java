@@ -72,7 +72,6 @@ public class UserDao extends AbstractDaoImpl<User> {
 
         String newPassword = userPasswordOnly.getPassword();
         user.setPassword(newPassword);
-        user.setUpdateTimestamp(System.currentTimeMillis());
 
         System.out.println(user.getPassword());
 
@@ -97,19 +96,15 @@ public class UserDao extends AbstractDaoImpl<User> {
 
         if (newName != null && !newName.equals("")) {
             user.setName(newName);
-            user.setUpdateTimestamp(System.currentTimeMillis());
         }
         if (newSurname != null && !newSurname.equals("")) {
             user.setSurname(newSurname);
-            user.setUpdateTimestamp(System.currentTimeMillis());
         }
         if (newPhone != null && !newPhone.equals("")) {
             user.setPhone(newPhone);
-            user.setUpdateTimestamp(System.currentTimeMillis());
         }
         if (newEmail != null && !newEmail.equals("")) {
             user.setEmail(newEmail);
-            user.setUpdateTimestamp(System.currentTimeMillis());
         }
 
         return update(user);
