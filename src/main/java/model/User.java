@@ -44,17 +44,6 @@ public class User extends AbstractModel {
     public User() {
     }
 
-    public User(String nick, Address address, String password, long createTimestamp, long updateTimestamp, boolean active, boolean loggedIn, boolean admin) {
-        this.nick = nick;
-        this.address = address;
-        this.password = password;
-        this.createTimestamp = createTimestamp;
-        this.updateTimestamp = updateTimestamp;
-        this.active = active;
-        this.loggedIn = loggedIn;
-        this.admin = admin;
-    }
-
     public String getName() {
         return name;
     }
