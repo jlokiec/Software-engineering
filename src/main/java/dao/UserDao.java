@@ -124,7 +124,7 @@ public class UserDao extends AbstractDaoImpl<User> {
             return false;
         }
 
-        if (user.isLoggedIn()) {
+        if (user.isActive() && user.isLoggedIn()) {
             user.setLoggedIn(false);
             update(user);
             return true;
