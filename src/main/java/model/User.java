@@ -53,6 +53,7 @@ public class User extends AbstractModel {
 
     public void setName(String name) {
         this.name = name;
+        updateTimestamp = System.currentTimeMillis();
     }
 
     public String getSurname() {
@@ -61,6 +62,7 @@ public class User extends AbstractModel {
 
     public void setSurname(String surname) {
         this.surname = surname;
+        updateTimestamp = System.currentTimeMillis();
     }
 
     public String getNick() {
@@ -77,6 +79,7 @@ public class User extends AbstractModel {
 
     public void setEmail(String email) {
         this.email = email;
+        updateTimestamp = System.currentTimeMillis();
     }
 
     public String getPhone() {
@@ -85,6 +88,7 @@ public class User extends AbstractModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+        updateTimestamp = System.currentTimeMillis();
     }
 
     public Address getAddress() {
@@ -103,6 +107,7 @@ public class User extends AbstractModel {
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
+        updateTimestamp = System.currentTimeMillis();
     }
 
     public Question getQuestion() {
