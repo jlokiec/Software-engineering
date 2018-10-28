@@ -14,7 +14,7 @@ public class User extends AbstractModel {
     private String phone;
     private String answer;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nick;
 
     @OneToOne
