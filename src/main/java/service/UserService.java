@@ -16,6 +16,7 @@ public class UserService {
     private static final String PATH_LOGIN = "login";
     private static final String PATH_DETAILS = "details";
     private static final String PATH_LOGOUT = "logout";
+    private static final String PATH_ANSWER = "answer";
 
     // parameters
     private static final String ID = "id";
@@ -115,5 +116,17 @@ public class UserService {
         }
 
         return Response.ok().build();
+    }
+
+    @POST
+    @Path("/" + PATH_ANSWER)
+    public Response checkQuestionAnswer(final UserNickAndAnswer userNickAndAnswer) {
+        UserDao dao = new UserDao();
+
+        if (dao.checkQuestionAnswer(userNickAndAnswer)) {
+            return Response.ok().build();
+        }
+
+        return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 }
