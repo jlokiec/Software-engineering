@@ -106,11 +106,11 @@ public class UserService {
     public Response updateUserDetails(final UserDetails userDetails, @PathParam(ID) int id) {
         UserDao dao = new UserDao();
 
-        if (dao.updateDetails(userDetails, id) == null) {
-            return Response.noContent().build();
+        if (dao.updateDetails(userDetails, id)) {
+            return Response.ok().build();
         }
 
-        return Response.ok().build();
+        return Response.noContent().build();
     }
 
     @POST

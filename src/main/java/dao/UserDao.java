@@ -58,11 +58,11 @@ public class UserDao extends AbstractDaoImpl<User> {
         return false;
     }
 
-    public User updateDetails(final UserDetails userDetails, int id) {
+    public boolean updateDetails(final UserDetails userDetails, int id) {
         User user = read(id);
 
         if (user == null) {
-            return null;
+            return false;
         }
 
         if (user.isActive() && user.isLoggedIn()) {
@@ -84,10 +84,10 @@ public class UserDao extends AbstractDaoImpl<User> {
                 user.setEmail(newEmail);
             }
 
-            return update(user);
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     public boolean login(final UserNickAndPassword userNickAndPassword) {
