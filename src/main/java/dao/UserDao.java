@@ -1,11 +1,9 @@
 package dao;
 
 import model.User;
-import model.patch.UserActiveOnly;
-import model.patch.UserDetails;
-import model.patch.UserNickAndPassword;
-import model.patch.UserPasswordOnly;
+import model.patch.*;
 
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
@@ -125,6 +123,36 @@ public class UserDao extends AbstractDaoImpl<User> {
 
         if (user.isLoggedIn()) {
             user.setLoggedIn(false);
+            update(user);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean checkQuestionAnswer(final UserNickAndAnswer userNickAndAnswer) {
+        String nick = userNickAndAnswer.getNick();
+        String answer = userNickAndAnswer.getAnswer();
+
+        String sqlQuery = "select * from [pizzeria].[dbo].[user] where [nick] = :nick and [question_id] is not null and [answer] = :answer";
+        Query query = entityManager.createNativeQuery(sqlQuery, User.class);
+        query.setParameter("nick", nick);
+        query.setParameter("answer", answer);
+
+        User user = null;
+
+        try {
+            user = (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            return false;
+        }
+
+        if (user == null) {
+            return false;
+        }
+
+        if (user.isActive()) {
+            user.setAbleToChangePassword(true);
             update(user);
             return true;
         }
