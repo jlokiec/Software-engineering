@@ -1,6 +1,7 @@
 package service;
 
 import dao.AddressDao;
+import dao.DaoException;
 import model.Address;
 
 import javax.ws.rs.*;
@@ -16,7 +17,13 @@ public class AddressService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAddress(final Address address, @Context UriInfo uriInfo) {
         AddressDao dao = new AddressDao();
-        Address createdAddress = dao.create(address);
+        Address createdAddress = null;
+
+        try {
+            createdAddress = dao.create(address);
+        } catch (DaoException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
         UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
         uriBuilder.path(Integer.toString(createdAddress.getId()));
