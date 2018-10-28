@@ -41,6 +41,9 @@ public class User extends AbstractModel {
     @Column(nullable = false)
     private boolean admin = false;
 
+    @Column(nullable = false)
+    private boolean ableToChangePassword = false;
+
     public User() {
     }
 
@@ -158,5 +161,13 @@ public class User extends AbstractModel {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isAbleToChangePassword() {
+        return ableToChangePassword;
+    }
+
+    public void setAbleToChangePassword(boolean ableToChangePassword) {
+        this.ableToChangePassword = ableToChangePassword;
     }
 }
