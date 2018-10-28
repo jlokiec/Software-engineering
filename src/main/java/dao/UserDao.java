@@ -35,10 +35,7 @@ public class UserDao extends AbstractDaoImpl<User> {
 
         boolean newActive = userActiveOnly.isActive();
         user.setActive(newActive);
-
-        if (update(user) == null) {
-            return false;
-        }
+        update(user);
 
         return true;
     }
