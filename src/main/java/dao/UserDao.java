@@ -63,23 +63,6 @@ public class UserDao extends AbstractDaoImpl<User> {
         return true;
     }
 
-    public boolean updateLoggedIn(final UserLoggedInOnly userLoggedInOnly, int id) {
-        User user = read(id);
-
-        if (user == null) {
-            return false;
-        }
-
-        boolean newLoggedIn = userLoggedInOnly.isLoggedIn();
-        user.setLoggedIn(newLoggedIn);
-
-        if (update(user) == null) {
-            return false;
-        }
-
-        return true;
-    }
-
     public boolean updatePassword(final UserPasswordOnly userPasswordOnly, int id) {
         User user = read(id);
 
