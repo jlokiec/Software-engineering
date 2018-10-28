@@ -27,19 +27,19 @@ public class User extends AbstractModel {
     private Question question;
 
     @Column(nullable = false)
-    private long createTimestamp;
+    private long createTimestamp = System.currentTimeMillis();
 
     @Column(nullable = false)
-    private long updateTimestamp;
+    private long updateTimestamp = System.currentTimeMillis();
 
     @Column(nullable = false)
-    private boolean active;
+    private boolean active = true;
 
     @Column(nullable = false)
-    private boolean loggedIn;
+    private boolean loggedIn = false;
 
     @Column(nullable = false)
-    private boolean admin;
+    private boolean admin = false;
 
     public User() {
     }
