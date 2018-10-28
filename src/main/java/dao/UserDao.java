@@ -1,11 +1,13 @@
 package dao;
 
 import model.User;
-import model.patch.*;
+import model.patch.UserActiveOnly;
+import model.patch.UserDetails;
+import model.patch.UserNickAndPassword;
+import model.patch.UserPasswordOnly;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import java.util.List;
 
 public class UserDao extends AbstractDaoImpl<User> {
     public UserDao() {
@@ -99,16 +101,16 @@ public class UserDao extends AbstractDaoImpl<User> {
         query.setParameter("nick", nick);
         query.setParameter("password", password);
 
-        List<User> users = query.getResultList();
+        User user = (User) query.getSingleResult();
 
-        if (users.size() == 1) {
-            User user = users.get(0);
+        if (user == null) {
+            return false;
+        }
 
-            if (user.isActive()) {
-                user.setLoggedIn(true);
-                update(user);
-                return true;
-            }
+        if (user.isActive()) {
+            user.setLoggedIn(true);
+            update(user);
+            return true;
         }
 
         return false;
