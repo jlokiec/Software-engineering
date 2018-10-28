@@ -68,25 +68,29 @@ public class UserDao extends AbstractDaoImpl<User> {
             return null;
         }
 
-        String newName = userDetails.getName();
-        String newSurname = userDetails.getSurname();
-        String newPhone = userDetails.getPhone();
-        String newEmail = userDetails.getEmail();
+        if (user.isActive() && user.isLoggedIn()) {
+            String newName = userDetails.getName();
+            String newSurname = userDetails.getSurname();
+            String newPhone = userDetails.getPhone();
+            String newEmail = userDetails.getEmail();
 
-        if (newName != null && !newName.equals("")) {
-            user.setName(newName);
-        }
-        if (newSurname != null && !newSurname.equals("")) {
-            user.setSurname(newSurname);
-        }
-        if (newPhone != null && !newPhone.equals("")) {
-            user.setPhone(newPhone);
-        }
-        if (newEmail != null && !newEmail.equals("")) {
-            user.setEmail(newEmail);
+            if (newName != null && !newName.equals("")) {
+                user.setName(newName);
+            }
+            if (newSurname != null && !newSurname.equals("")) {
+                user.setSurname(newSurname);
+            }
+            if (newPhone != null && !newPhone.equals("")) {
+                user.setPhone(newPhone);
+            }
+            if (newEmail != null && !newEmail.equals("")) {
+                user.setEmail(newEmail);
+            }
+
+            return update(user);
         }
 
-        return update(user);
+        return null;
     }
 
     public boolean login(final UserNickAndPassword userNickAndPassword) {
