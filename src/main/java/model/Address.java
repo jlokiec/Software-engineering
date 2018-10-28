@@ -14,13 +14,6 @@ public class Address extends AbstractModel {
     public Address() {
     }
 
-    public Address(String name, String city, String postalCode, String street) {
-        this.name = name;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.street = street;
-    }
-
     public String getName() {
         return name;
     }
