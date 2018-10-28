@@ -1,5 +1,6 @@
 package service;
 
+import dao.NickTakenException;
 import dao.UserDao;
 import model.User;
 import model.patch.*;
@@ -24,7 +25,13 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(final User user, @Context UriInfo uriInfo) {
         UserDao userDao = new UserDao();
-        User createdUser = userDao.create(user);
+        User createdUser = null;
+
+        try {
+            createdUser = userDao.create(user);
+        } catch (NickTakenException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
         if (createdUser == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
