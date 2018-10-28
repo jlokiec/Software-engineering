@@ -17,7 +17,7 @@ public class AbstractDaoImpl<T extends AbstractModel> implements InterfaceDao<T>
     }
 
     @Override
-    public T create(T modelObject) {
+    public T create(T modelObject) throws DaoException {
         entityManager.getTransaction().begin();
         entityManager.persist(modelObject);
         entityManager.getTransaction().commit();

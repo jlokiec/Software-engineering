@@ -3,6 +3,7 @@ package dao;
 import model.User;
 import model.patch.*;
 
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -12,38 +13,17 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     @Override
-    public User create(User modelObject) {
-        if (checkIfNickIsTaken(modelObject.getNick())) {
-            return null;
+    public User create(User modelObject) throws NickTakenException {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(modelObject.getAddress());
+            entityManager.persist(modelObject);
+            entityManager.getTransaction().commit();
+        } catch (PersistenceException e) {
+            throw new NickTakenException();
         }
-
-        long createTimestamp = System.currentTimeMillis();
-
-        modelObject.setCreateTimestamp(createTimestamp);
-        modelObject.setUpdateTimestamp(createTimestamp);
-        modelObject.setActive(true);
-        modelObject.setLoggedIn(false);
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(modelObject.getAddress());
-        entityManager.persist(modelObject);
-        entityManager.getTransaction().commit();
 
         return modelObject;
-    }
-
-    private boolean checkIfNickIsTaken(String nick) {
-        String sqlQuery = "select count(1) from [pizzeria].[dbo].[user] where [nick] = :nick";
-        Query query = entityManager.createNativeQuery(sqlQuery);
-        query.setParameter("nick", nick);
-
-        int count = (Integer) query.getSingleResult();
-
-        if (count == 0) {
-            return false;
-        }
-
-        return true;
     }
 
     public boolean updateActive(final UserActiveOnly userActiveOnly, int id) {

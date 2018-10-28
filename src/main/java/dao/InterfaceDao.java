@@ -3,7 +3,7 @@ package dao;
 import model.AbstractModel;
 
 public interface InterfaceDao<T extends AbstractModel> {
-    T create(T modelObject);
+    T create(T modelObject) throws DaoException;
 
     T read(int id);
 
