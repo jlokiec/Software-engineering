@@ -7,9 +7,13 @@ import model.patch.DiscountActiveOnly;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.util.List;
 
 @Path("/discounts")
 public class DiscountService {
+    // paths
+    private static final String PATH_GET_ALL = "get_all";
+
     // parameters
     private static final String ID = "id";
 
@@ -43,6 +47,16 @@ public class DiscountService {
         }
 
         return Response.ok(discount).build();
+    }
+
+    @GET
+    @Path("/" + PATH_GET_ALL)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDiscounts() {
+        DiscountDao dao = new DiscountDao();
+        List<Discount> discounts = dao.getAll();
+
+        return Response.ok(discounts).build();
     }
 
     @PATCH
