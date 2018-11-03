@@ -31,6 +31,20 @@ public class DiscountService {
         }
     }
 
+    @GET
+    @Path("/{" + ID + "}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDiscountById(@PathParam(ID) int id) {
+        DiscountDao dao = new DiscountDao();
+        Discount discount = dao.read(id);
+
+        if (discount == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(discount).build();
+    }
+
     @PATCH
     @Path("/{" + ID + "}")
     @Consumes(MediaType.APPLICATION_JSON)
