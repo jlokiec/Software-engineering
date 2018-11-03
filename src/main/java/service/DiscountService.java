@@ -72,4 +72,19 @@ public class DiscountService {
 
         return Response.noContent().build();
     }
+
+    @PUT
+    @Path("/{" + ID + "}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDiscount(final Discount discountToUpdate, @PathParam(ID) int id) {
+        DiscountDao dao = new DiscountDao();
+        Discount updatedDiscount = dao.update(discountToUpdate);
+
+        if (updatedDiscount == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(updatedDiscount).build();
+    }
 }
