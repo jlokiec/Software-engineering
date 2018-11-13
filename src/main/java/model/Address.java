@@ -26,6 +26,7 @@ public class Address extends AbstractModel {
         this.street = street;
     }
 
+=======
     public String getName() {
         return name;
     }

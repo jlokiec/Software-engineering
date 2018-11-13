@@ -17,7 +17,7 @@ public class AbstractDaoImpl<T extends AbstractModel> implements InterfaceDao<T>
     }
 
     @Override
-    public T create(T modelObject) {
+    public T create(T modelObject) throws DaoException {
         entityManager.getTransaction().begin();
         entityManager.persist(modelObject);
         entityManager.getTransaction().commit();
@@ -32,6 +32,10 @@ public class AbstractDaoImpl<T extends AbstractModel> implements InterfaceDao<T>
 
     @Override
     public T update(T modelObject) {
+        if (entityManager.find(genericClass, modelObject.getId()) == null) {
+            return null;
+        }
+
         entityManager.getTransaction().begin();
         T updatedObject = entityManager.merge(modelObject);
         entityManager.getTransaction().commit();
@@ -40,10 +44,16 @@ public class AbstractDaoImpl<T extends AbstractModel> implements InterfaceDao<T>
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
+        if (entityManager.find(genericClass, id) == null) {
+            return false;
+        }
+
         entityManager.getTransaction().begin();
         T foundObject = entityManager.find(genericClass, id);
         entityManager.remove(foundObject);
         entityManager.getTransaction().commit();
+
+        return true;
     }
 }
