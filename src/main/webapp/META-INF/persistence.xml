@@ -7,18 +7,15 @@
         <jta-data-source>java:/mssql-pizzeria</jta-data-source>
 
         <class>model.Address</class>
-<<<<<<< HEAD
-		<class>model.Product</class>
-		<class>model.Component</class>
-		<class>model.DeliveryOption</class>
-		<class>model.Vehicle</class>
-		<class>model.Delivery</class>
-		<class>model.Invoice</class>
-=======
+        <class>model.Product</class>
+        <class>model.Component</class>
+        <class>model.DeliveryOption</class>
+        <class>model.Vehicle</class>
+        <class>model.Delivery</class>
+        <class>model.Invoice</class>
         <class>model.Question</class>
         <class>model.User</class>
         <class>model.Discount</class>
->>>>>>> upstream/develop
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
