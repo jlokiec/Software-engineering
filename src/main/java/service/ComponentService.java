@@ -1,6 +1,7 @@
 package service;
 
 import dao.ComponentDao;
+import dao.DaoException;
 import dao.ProductDao;
 import model.Component;
 import model.Product;
@@ -46,7 +47,12 @@ public class ComponentService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createComponent(final Component component) {
         ComponentDao dao = new ComponentDao();
-        Component createdComponent = dao.create(component);
+        Component createdComponent = null;
+        try {
+            createdComponent = dao.create(component);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
 
         return Response.ok(createdComponent).build();
     }
