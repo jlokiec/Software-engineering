@@ -15,6 +15,9 @@
 		<class>model.Delivery</class>
 		<class>model.Invoice</class>
 =======
+        <class>model.Question</class>
+        <class>model.User</class>
+        <class>model.Discount</class>
 >>>>>>> upstream/develop
 
         <properties>
