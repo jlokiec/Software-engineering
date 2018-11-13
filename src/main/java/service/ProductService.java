@@ -1,8 +1,7 @@
 package service;
 
-import dao.AddressDao;
+import dao.DaoException;
 import dao.ProductDao;
-import model.Address;
 import model.Product;
 
 import javax.ws.rs.*;
@@ -33,7 +32,7 @@ public class ProductService {
     @GET
     @Path("/" + PATH_GET_ALL)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllProducts(){
+    public Response getAllProducts() {
         ProductDao dao = new ProductDao();
         List<Product> products = dao.getAll();
 
@@ -46,7 +45,12 @@ public class ProductService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createProduct(final Product product) {
         ProductDao dao = new ProductDao();
-        Product createdProduct = dao.create(product);
+        Product createdProduct = null;
+        try {
+            createdProduct = dao.create(product);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
 
         return Response.ok(createdProduct).build();
     }
