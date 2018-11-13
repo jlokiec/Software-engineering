@@ -1,6 +1,7 @@
 package service;
 
 import dao.AddressDao;
+import dao.DaoException;
 import dao.InvoiceDao;
 import model.Address;
 import model.Invoice;
@@ -34,7 +35,12 @@ public class InvoiceService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createInvoice(final Invoice invoice) {
         InvoiceDao dao = new InvoiceDao();
-        Invoice createdInvoice = dao.create(invoice);
+        Invoice createdInvoice = null;
+        try {
+            createdInvoice = dao.create(invoice);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
 
         return Response.ok(createdInvoice).build();
     }
