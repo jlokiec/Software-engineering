@@ -15,7 +15,7 @@ public class ComponentService {
     // paths
     private static final String PATH_CREATE = "create";
     private static final String PATH_UPDATE = "update";
-    private static final String PATH_GET_ALL = "gett_all";
+    private static final String PATH_GET_ALL = "get_all";
 
     // parameters
     private static final String ID = "id";
