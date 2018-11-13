@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
+@Table(name = "[pizzeria].[dbo].[address]")
 public class Address extends AbstractModel {
     @AttributeOverride(name="id", column =@Column(name="address_id"))
     private String name;
@@ -17,6 +18,7 @@ public class Address extends AbstractModel {
     public Address() {
     }
 
+<<<<<<< HEAD
     public Address(String name, String nip, String city, String postalCode, String street) {
         this.name = name;
         this.nip = nip;
@@ -26,6 +28,7 @@ public class Address extends AbstractModel {
     }
 
 =======
+>>>>>>> upstream/develop
     public String getName() {
         return name;
     }
