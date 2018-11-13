@@ -1,8 +1,7 @@
 package service;
 
-import dao.AddressDao;
+import dao.DaoException;
 import dao.DeliveryDao;
-import model.Address;
 import model.Delivery;
 
 import javax.ws.rs.*;
@@ -34,7 +33,12 @@ public class DeliveryService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createDelivery(final Delivery delivery) {
         DeliveryDao dao = new DeliveryDao();
-        Delivery createdDelivery = dao.create(delivery);
+        Delivery createdDelivery = null;
+        try {
+            createdDelivery = dao.create(delivery);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
 
         return Response.ok(createdDelivery).build();
     }
