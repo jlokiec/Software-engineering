@@ -1,8 +1,7 @@
 package service;
 
-import dao.ComponentDao;
+import dao.DaoException;
 import dao.DeliveryOptionDao;
-import model.Component;
 import model.DeliveryOption;
 
 import javax.ws.rs.*;
@@ -34,7 +33,12 @@ public class DeliveryOptionService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createDeliveryOption(final DeliveryOption deliveryOption) {
         DeliveryOptionDao dao = new DeliveryOptionDao();
-        DeliveryOption createdDeliveryOption = dao.create(deliveryOption);
+        DeliveryOption createdDeliveryOption = null;
+        try {
+            createdDeliveryOption = dao.create(deliveryOption);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
 
         return Response.ok(createdDeliveryOption).build();
     }
