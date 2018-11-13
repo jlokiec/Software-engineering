@@ -1,5 +1,6 @@
 package service;
 
+import dao.DaoException;
 import dao.VehicleDao;
 import model.Vehicle;
 
@@ -32,7 +33,12 @@ public class VehicleService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createVehicle(final Vehicle vehicle) {
         VehicleDao dao = new VehicleDao();
-        Vehicle createdVehicle = dao.create(vehicle);
+        Vehicle createdVehicle = null;
+        try {
+            createdVehicle = dao.create(vehicle);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
 
         return Response.ok(createdVehicle).build();
     }
