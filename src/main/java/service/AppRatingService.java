@@ -12,6 +12,9 @@ public class AppRatingService {
     // paths
     private static final String PATH_AVERAGE_RATING = "avg";
 
+    // parameters
+    private static final String ID = "id";
+
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -40,5 +43,19 @@ public class AppRatingService {
         Double averageRating = dao.getAverageRating();
 
         return Response.ok(averageRating).build();
+    }
+
+    @GET
+    @Path("/{" + ID + "}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response get(@PathParam(ID) int id) {
+        AppRatingDao dao = new AppRatingDao();
+        AppRating appRating = dao.read(id);
+
+        if (appRating == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(appRating).build();
     }
 }
