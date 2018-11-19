@@ -1,12 +1,16 @@
 package model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "[pizzeria].[dbo].[app_rating]")
 public class AppRating extends AbstractModel {
+    @Column(nullable = false)
     private double rating;
+
+    @Column(nullable = false)
     private long rateTimestamp;
 
     public double getRating() {
