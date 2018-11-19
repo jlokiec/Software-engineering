@@ -16,6 +16,7 @@
         <class>model.Question</class>
         <class>model.User</class>
         <class>model.Discount</class>
+        <class>model.AppRating</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
