@@ -17,6 +17,9 @@
         <class>model.User</class>
         <class>model.Discount</class>
         <class>model.AppRating</class>
+        <class>model.Order</class>
+        <class>model.OrderComponent</class>
+        <class>model.OrderProduct</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
