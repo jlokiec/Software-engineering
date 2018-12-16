@@ -8,7 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/deliveryoption")
+@Path("/deliveryoptions")
 public class DeliveryOptionService {
     // parameters
     private static final String ID = "id";

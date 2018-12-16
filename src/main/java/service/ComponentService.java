@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/component")
+@Path("/components")
 public class ComponentService {
     private static final String PATH_GET_ALL = "get_all";
 

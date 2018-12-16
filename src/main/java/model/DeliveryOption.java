@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "pizzeria.dbo.deliveryOption")
 public class DeliveryOption extends AbstractModel {
-    @AttributeOverride(name="id", column =@Column(name="delivery_option_id"))
     @ManyToOne
     @JoinColumn(name="vehicle_id")
     private Vehicle vehicle;

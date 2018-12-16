@@ -10,7 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/invoice")
+@Path("/invoices")
 public class InvoiceService {
     // parameters
     private static final String ID = "id";

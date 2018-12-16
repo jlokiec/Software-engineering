@@ -8,7 +8,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "[pizzeria].[dbo].[address]")
 public class Address extends AbstractModel {
-    @AttributeOverride(name = "id", column = @Column(name = "address_id"))
     private String name;
     private String nip;
     private String city;

@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "pizzeria.dbo.vehicle")
 public class Vehicle extends AbstractModel {
-    @AttributeOverride(name="id", column =@Column(name="vehicle_id"))
     private String name;
     private String image;
 
