@@ -10,10 +10,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/delivery")
 public class DeliveryService {
-    // paths
-    private static final String PATH_CREATE = "create";
-    private static final String PATH_UPDATE = "update";
-
     // parameters
     private static final String ID = "id";
 
@@ -30,21 +26,21 @@ public class DeliveryService {
     }
 
     @POST
-    @Path("/" + PATH_CREATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createDelivery(final Delivery delivery) {
         DeliveryDao dao = new DeliveryDao();
         try {
             Delivery createdDelivery = dao.create(delivery);
-            return Response.ok(createdDelivery).build();
+            return Response.ok(createdDelivery.getId()).build();
         } catch (DaoException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
     @PUT
-    @Path("/" + PATH_UPDATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateDelivery(final Delivery deliveryToUpdate) {

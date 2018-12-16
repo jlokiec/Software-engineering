@@ -10,10 +10,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/vehicle")
 public class VehicleService {
-    // paths
-    private static final String PATH_CREATE = "create";
-    private static final String PATH_UPDATE = "update";
-
     // parameters
     private static final String ID = "id";
 
@@ -30,21 +26,21 @@ public class VehicleService {
     }
 
     @POST
-    @Path("/" + PATH_CREATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createVehicle(final Vehicle vehicle) {
         VehicleDao dao = new VehicleDao();
         try {
             Vehicle createdVehicle = dao.create(vehicle);
-            return Response.ok(createdVehicle).build();
+            return Response.ok(createdVehicle.getId()).build();
         } catch (DaoException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
     @PUT
-    @Path("/" + PATH_UPDATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateVehicle(final Vehicle vehicleToUpdate) {

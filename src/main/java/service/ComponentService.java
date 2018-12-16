@@ -11,9 +11,6 @@ import java.util.List;
 
 @Path("/component")
 public class ComponentService {
-    // paths
-    private static final String PATH_CREATE = "create";
-    private static final String PATH_UPDATE = "update";
     private static final String PATH_GET_ALL = "get_all";
 
     private static final String ID = "id";
@@ -41,21 +38,21 @@ public class ComponentService {
     }
 
     @POST
-    @Path("/" + PATH_CREATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createComponent(final Component component) {
         ComponentDao dao = new ComponentDao();
         try {
             Component createdComponent = dao.create(component);
-            return Response.ok(createdComponent).build();
+            return Response.ok(createdComponent.getId()).build();
         } catch (DaoException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
     @PUT
-    @Path("/" + PATH_UPDATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateComponent(final Component componentToUpdate) {

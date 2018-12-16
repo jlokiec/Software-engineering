@@ -11,9 +11,6 @@ import java.util.List;
 
 @Path("/product")
 public class ProductService {
-    // paths
-    private static final String PATH_CREATE = "create";
-    private static final String PATH_UPDATE = "update";
     private static final String PATH_GET_ALL = "get_all";
 
     // parameters
@@ -44,21 +41,21 @@ public class ProductService {
     }
 
     @POST
-    @Path("/" + PATH_CREATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createProduct(final Product product) {
         ProductDao dao = new ProductDao();
         try {
             Product createdProduct = dao.create(product);
-            return Response.ok(createdProduct).build();
+            return Response.ok(createdProduct.getId()).build();
         } catch (DaoException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
     @PUT
-    @Path("/" + PATH_UPDATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateProduct(final Product productToUpdate) {

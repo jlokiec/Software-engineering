@@ -12,10 +12,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/invoice")
 public class InvoiceService {
-    // paths
-    private static final String PATH_CREATE = "create";
-    private static final String PATH_UPDATE = "update";
-
     // parameters
     private static final String ID = "id";
 
@@ -32,21 +28,21 @@ public class InvoiceService {
     }
 
     @POST
-    @Path("/" + PATH_CREATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createInvoice(final Invoice invoice) {
         InvoiceDao dao = new InvoiceDao();
         try {
             Invoice createdInvoice = dao.create(invoice);
-            return Response.ok(createdInvoice).build();
+            return Response.ok(createdInvoice.getId()).build();
         } catch (DaoException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
     @PUT
-    @Path("/" + PATH_UPDATE)
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateInvoice(final Invoice invoiceToUpdate) {
