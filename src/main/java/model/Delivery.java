@@ -12,6 +12,9 @@ public class Delivery extends AbstractModel{
     @ManyToOne
     @JoinColumn(name="address_id")
     private Address address;
+    @ManyToOne
+    @JoinColumn(name="order_id")
+    private Order order;
 
     public Delivery(){}
 
@@ -30,4 +33,8 @@ public class Delivery extends AbstractModel{
     public void setDeliveryOption(DeliveryOption deliveryOption) {
         this.deliveryOption = deliveryOption;
     }
+
+    public Order getOrder() { return order; }
+
+    public void setOrder(Order order) {this.order = order; }
 }
