@@ -23,7 +23,9 @@ public class VehicleService {
     public Response getVehicleById(@PathParam(ID) int id) {
         VehicleDao dao = new VehicleDao();
         Vehicle vehicle = dao.read(id);
-
+        if (vehicle == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(vehicle).build();
     }
 
@@ -33,14 +35,12 @@ public class VehicleService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createVehicle(final Vehicle vehicle) {
         VehicleDao dao = new VehicleDao();
-        Vehicle createdVehicle = null;
         try {
-            createdVehicle = dao.create(vehicle);
+            Vehicle createdVehicle = dao.create(vehicle);
+            return Response.ok(createdVehicle).build();
         } catch (DaoException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        return Response.ok(createdVehicle).build();
     }
 
     @PUT
@@ -50,7 +50,9 @@ public class VehicleService {
     public Response updateVehicle(final Vehicle vehicleToUpdate) {
         VehicleDao dao = new VehicleDao();
         Vehicle updatedVehicle = dao.update(vehicleToUpdate);
-
+        if (updatedVehicle == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(updatedVehicle).build();
     }
 
@@ -58,9 +60,11 @@ public class VehicleService {
     @Path("/{" + ID + "}")
     public Response deleteVehicle(@PathParam(ID) int id) {
         VehicleDao dao = new VehicleDao();
-        dao.delete(id);
+        if (dao.delete(id)) {
+            return Response.ok().build();
+        }
 
-        return Response.ok().build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }
 

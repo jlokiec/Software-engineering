@@ -2,9 +2,7 @@ package service;
 
 import dao.ComponentDao;
 import dao.DaoException;
-import dao.ProductDao;
 import model.Component;
-import model.Product;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,7 +16,6 @@ public class ComponentService {
     private static final String PATH_UPDATE = "update";
     private static final String PATH_GET_ALL = "get_all";
 
-    // parameters
     private static final String ID = "id";
 
     @GET
@@ -27,12 +24,14 @@ public class ComponentService {
     public Response getComponentById(@PathParam(ID) int id) {
         ComponentDao dao = new ComponentDao();
         Component component = dao.read(id);
-
+        if (component == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(component).build();
     }
 
     @GET
-    @Path("/{" + PATH_GET_ALL)
+    @Path("/" + PATH_GET_ALL)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllComponents() {
         ComponentDao dao = new ComponentDao();
@@ -47,14 +46,12 @@ public class ComponentService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createComponent(final Component component) {
         ComponentDao dao = new ComponentDao();
-        Component createdComponent = null;
         try {
-            createdComponent = dao.create(component);
+            Component createdComponent = dao.create(component);
+            return Response.ok(createdComponent).build();
         } catch (DaoException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        return Response.ok(createdComponent).build();
     }
 
     @PUT
@@ -64,7 +61,9 @@ public class ComponentService {
     public Response updateComponent(final Component componentToUpdate) {
         ComponentDao dao = new ComponentDao();
         Component updatedComponent = dao.update(componentToUpdate);
-
+        if (updatedComponent == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(updatedComponent).build();
     }
 
@@ -72,8 +71,10 @@ public class ComponentService {
     @Path("/{" + ID + "}")
     public Response deleteComponent(@PathParam(ID) int id) {
         ComponentDao dao = new ComponentDao();
-        dao.delete(id);
+        if (dao.delete(id)) {
+            return Response.ok().build();
+        }
 
-        return Response.ok().build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

@@ -23,7 +23,9 @@ public class DeliveryOptionService {
     public Response getDeliveryOptionById(@PathParam(ID) int id) {
         DeliveryOptionDao dao = new DeliveryOptionDao();
         DeliveryOption deliveryOption = dao.read(id);
-
+        if (deliveryOption == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(deliveryOption).build();
     }
 
@@ -33,14 +35,12 @@ public class DeliveryOptionService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createDeliveryOption(final DeliveryOption deliveryOption) {
         DeliveryOptionDao dao = new DeliveryOptionDao();
-        DeliveryOption createdDeliveryOption = null;
         try {
-            createdDeliveryOption = dao.create(deliveryOption);
+            DeliveryOption createdDeliveryOption = dao.create(deliveryOption);
+            return Response.ok(createdDeliveryOption).build();
         } catch (DaoException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        return Response.ok(createdDeliveryOption).build();
     }
 
     @PUT
@@ -50,7 +50,9 @@ public class DeliveryOptionService {
     public Response updateDeliveryOption(final DeliveryOption deliveryOptionToUpdate) {
         DeliveryOptionDao dao = new DeliveryOptionDao();
         DeliveryOption updatedDeliveryOption = dao.update(deliveryOptionToUpdate);
-
+        if (updatedDeliveryOption == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(updatedDeliveryOption).build();
     }
 
@@ -58,8 +60,10 @@ public class DeliveryOptionService {
     @Path("/{" + ID + "}")
     public Response deleteDeliveryOption(@PathParam(ID) int id) {
         DeliveryOptionDao dao = new DeliveryOptionDao();
-        dao.delete(id);
+        if (dao.delete(id)) {
+            return Response.ok().build();
+        }
 
-        return Response.ok().build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

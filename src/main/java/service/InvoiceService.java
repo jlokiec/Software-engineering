@@ -25,7 +25,9 @@ public class InvoiceService {
     public Response getInvoiceById(@PathParam(ID) int id) {
         InvoiceDao dao = new InvoiceDao();
         Invoice invoice = dao.read(id);
-
+        if (invoice == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(invoice).build();
     }
 
@@ -35,14 +37,12 @@ public class InvoiceService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createInvoice(final Invoice invoice) {
         InvoiceDao dao = new InvoiceDao();
-        Invoice createdInvoice = null;
         try {
-            createdInvoice = dao.create(invoice);
+            Invoice createdInvoice = dao.create(invoice);
+            return Response.ok(createdInvoice).build();
         } catch (DaoException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        return Response.ok(createdInvoice).build();
     }
 
     @PUT
@@ -52,7 +52,9 @@ public class InvoiceService {
     public Response updateInvoice(final Invoice invoiceToUpdate) {
         InvoiceDao dao = new InvoiceDao();
         Invoice updatedInvoice = dao.update(invoiceToUpdate);
-
+        if (updatedInvoice == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(updatedInvoice).build();
     }
 
@@ -60,8 +62,10 @@ public class InvoiceService {
     @Path("/{" + ID + "}")
     public Response deleteInvoice(@PathParam(ID) int id) {
         InvoiceDao dao = new InvoiceDao();
-        dao.delete(id);
+        if (dao.delete(id)) {
+            return Response.ok().build();
+        }
 
-        return Response.ok().build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

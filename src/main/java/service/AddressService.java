@@ -17,18 +17,17 @@ public class AddressService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAddress(final Address address, @Context UriInfo uriInfo) {
         AddressDao dao = new AddressDao();
-        Address createdAddress = null;
 
         try {
-            createdAddress = dao.create(address);
+            Address createdAddress = dao.create(address);
+
+            UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+            uriBuilder.path(Integer.toString(createdAddress.getId()));
+
+            return Response.created(uriBuilder.build()).build();
         } catch (DaoException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-        uriBuilder.path(Integer.toString(createdAddress.getId()));
-
-        return Response.created(uriBuilder.build()).build();
     }
 
     @GET

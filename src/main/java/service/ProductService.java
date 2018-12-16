@@ -26,6 +26,10 @@ public class ProductService {
         ProductDao dao = new ProductDao();
         Product product = dao.read(id);
 
+        if (product == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         return Response.ok(product).build();
     }
 
@@ -45,14 +49,12 @@ public class ProductService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createProduct(final Product product) {
         ProductDao dao = new ProductDao();
-        Product createdProduct = null;
         try {
-            createdProduct = dao.create(product);
+            Product createdProduct = dao.create(product);
+            return Response.ok(createdProduct).build();
         } catch (DaoException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        return Response.ok(createdProduct).build();
     }
 
     @PUT
@@ -62,7 +64,9 @@ public class ProductService {
     public Response updateProduct(final Product productToUpdate) {
         ProductDao dao = new ProductDao();
         Product updatedProduct = dao.update(productToUpdate);
-
+        if (updatedProduct == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(updatedProduct).build();
     }
 
@@ -70,9 +74,12 @@ public class ProductService {
     @Path("/{" + ID + "}")
     public Response deleteProduct(@PathParam(ID) int id) {
         ProductDao dao = new ProductDao();
-        dao.delete(id);
 
-        return Response.ok().build();
+        if (dao.delete(id)) {
+            return Response.ok().build();
+        }
+
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }
 

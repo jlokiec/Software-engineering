@@ -23,7 +23,9 @@ public class DeliveryService {
     public Response getDeliveryById(@PathParam(ID) int id) {
         DeliveryDao dao = new DeliveryDao();
         Delivery delivery = dao.read(id);
-
+        if (delivery == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(delivery).build();
     }
 
@@ -33,14 +35,12 @@ public class DeliveryService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createDelivery(final Delivery delivery) {
         DeliveryDao dao = new DeliveryDao();
-        Delivery createdDelivery = null;
         try {
-            createdDelivery = dao.create(delivery);
+            Delivery createdDelivery = dao.create(delivery);
+            return Response.ok(createdDelivery).build();
         } catch (DaoException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        return Response.ok(createdDelivery).build();
     }
 
     @PUT
@@ -50,7 +50,9 @@ public class DeliveryService {
     public Response updateDelivery(final Delivery deliveryToUpdate) {
         DeliveryDao dao = new DeliveryDao();
         Delivery updatedDelivery = dao.update(deliveryToUpdate);
-
+        if (updatedDelivery == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(updatedDelivery).build();
     }
 
@@ -58,8 +60,10 @@ public class DeliveryService {
     @Path("/{" + ID + "}")
     public Response deleteDelivery(@PathParam(ID) int id) {
         DeliveryDao dao = new DeliveryDao();
-        dao.delete(id);
+        if (dao.delete(id)) {
+            return Response.ok().build();
+        }
 
-        return Response.ok().build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }
