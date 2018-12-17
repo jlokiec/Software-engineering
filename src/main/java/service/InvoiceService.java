@@ -42,10 +42,10 @@ public class InvoiceService {
     }
 
     @PUT
-    @Path("/")
+    @Path("/{" + ID + "}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateInvoice(final Invoice invoiceToUpdate) {
+    public Response updateInvoice(final Invoice invoiceToUpdate, @PathParam(ID) int id) {
         InvoiceDao dao = new InvoiceDao();
         Invoice updatedInvoice = dao.update(invoiceToUpdate);
         if (updatedInvoice == null) {

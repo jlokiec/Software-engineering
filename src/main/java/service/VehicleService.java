@@ -40,10 +40,10 @@ public class VehicleService {
     }
 
     @PUT
-    @Path("/")
+    @Path("/{" + ID + "}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateVehicle(final Vehicle vehicleToUpdate) {
+    public Response updateVehicle(final Vehicle vehicleToUpdate, @PathParam(ID) int id) {
         VehicleDao dao = new VehicleDao();
         Vehicle updatedVehicle = dao.update(vehicleToUpdate);
         if (updatedVehicle == null) {

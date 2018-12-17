@@ -52,10 +52,10 @@ public class ComponentService {
     }
 
     @PUT
-    @Path("/")
+    @Path("/{" + ID + "}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateComponent(final Component componentToUpdate) {
+    public Response updateComponent(final Component componentToUpdate, @PathParam(ID) int id) {
         ComponentDao dao = new ComponentDao();
         Component updatedComponent = dao.update(componentToUpdate);
         if (updatedComponent == null) {

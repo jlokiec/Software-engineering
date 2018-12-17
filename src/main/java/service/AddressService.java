@@ -45,10 +45,10 @@ public class AddressService {
     }
 
     @PUT
-    @Path("/")
+    @Path("/{" + ID + "}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateAddress(final Address addressToUpdate) {
+    public Response updateAddress(final Address addressToUpdate, @PathParam(ID) int id) {
         AddressDao dao = new AddressDao();
         Address updatedAddress = dao.update(addressToUpdate);
 

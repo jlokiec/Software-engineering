@@ -55,10 +55,10 @@ public class ProductService {
     }
 
     @PUT
-    @Path("/")
+    @Path("/{" + ID + "}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProduct(final Product productToUpdate) {
+    public Response updateProduct(final Product productToUpdate, @PathParam(ID) int id) {
         ProductDao dao = new ProductDao();
         Product updatedProduct = dao.update(productToUpdate);
         if (updatedProduct == null) {

@@ -40,10 +40,10 @@ public class DeliveryService {
     }
 
     @PUT
-    @Path("/")
+    @Path("/{" + ID + "}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateDelivery(final Delivery deliveryToUpdate) {
+    public Response updateDelivery(final Delivery deliveryToUpdate, @PathParam(ID) int id) {
         DeliveryDao dao = new DeliveryDao();
         Delivery updatedDelivery = dao.update(deliveryToUpdate);
         if (updatedDelivery == null) {
