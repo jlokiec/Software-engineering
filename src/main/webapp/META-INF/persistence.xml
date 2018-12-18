@@ -20,6 +20,7 @@
         <class>model.Order</class>
         <class>model.OrderComponent</class>
         <class>model.OrderProduct</class>
+        <class>model.Rating</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
