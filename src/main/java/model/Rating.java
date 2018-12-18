@@ -1,8 +1,12 @@
 package model;
 
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "pizzeria.dbo.rating")
 public class Rating extends AbstractModel {
     @OneToOne
     @JoinColumn(name="user_id")

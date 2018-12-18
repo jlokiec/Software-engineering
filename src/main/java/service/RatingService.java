@@ -66,7 +66,7 @@ public class RatingService {
     @Produces(MediaType.TEXT_PLAIN)
     public Response getAverage() {
         RatingDao dao = new RatingDao();
-        int average = dao.getAverage();
+        List<Float> average = dao.getAverage();
         return Response.ok(average).build();
     }
 
