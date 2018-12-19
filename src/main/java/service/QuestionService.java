@@ -2,6 +2,7 @@ package service;
 
 import dao.QuestionDao;
 import model.Question;
+import org.pmw.tinylog.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,6 +22,8 @@ public class QuestionService {
     public Response getAllQuestions() {
         QuestionDao dao = new QuestionDao();
         List<Question> questions = dao.getAll();
+
+        Logger.info("Sending list of {} questions", questions.size());
 
         return Response.ok(questions).build();
     }
