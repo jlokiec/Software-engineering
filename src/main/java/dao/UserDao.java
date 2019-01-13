@@ -99,19 +99,19 @@ public class UserDao extends AbstractDaoImpl<User> {
         query.setParameter("nick", nick);
         query.setParameter("password", password);
 
-        User user = (User) query.getSingleResult();
+        try {
+            User user = (User) query.getSingleResult();
 
-        if (user == null) {
+            if (user.isActive()) {
+                user.setLoggedIn(true);
+                update(user);
+                return true;
+            }
+
+            return false;
+        } catch (NoResultException e) {
             return false;
         }
-
-        if (user.isActive()) {
-            user.setLoggedIn(true);
-            update(user);
-            return true;
-        }
-
-        return false;
     }
 
     public boolean logout(int id) {
