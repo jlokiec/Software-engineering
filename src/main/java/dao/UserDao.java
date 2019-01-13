@@ -90,7 +90,7 @@ public class UserDao extends AbstractDaoImpl<User> {
         return false;
     }
 
-    public boolean login(final UserNickAndPassword userNickAndPassword) {
+    public User login(final UserNickAndPassword userNickAndPassword) {
         String nick = userNickAndPassword.getNick();
         String password = userNickAndPassword.getPassword();
 
@@ -105,12 +105,12 @@ public class UserDao extends AbstractDaoImpl<User> {
             if (user.isActive()) {
                 user.setLoggedIn(true);
                 update(user);
-                return true;
+                return user;
             }
 
-            return false;
+            return null;
         } catch (NoResultException e) {
-            return false;
+            return null;
         }
     }
 

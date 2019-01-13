@@ -82,8 +82,10 @@ public class UserService {
     public Response login(final UserNickAndPassword userNickAndPassword) {
         UserDao dao = new UserDao();
 
-        if (dao.login(userNickAndPassword)) {
-            return Response.ok().build();
+        User user = dao.login(userNickAndPassword);
+
+        if (user != null) {
+            return Response.ok(user.getId()).build();
         }
 
         return Response.status(Response.Status.UNAUTHORIZED).build();
