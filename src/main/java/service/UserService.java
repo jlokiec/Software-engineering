@@ -79,13 +79,15 @@ public class UserService {
 
     @POST
     @Path("/" + PATH_LOGIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response login(final UserNickAndPassword userNickAndPassword) {
         UserDao dao = new UserDao();
 
         User user = dao.login(userNickAndPassword);
 
         if (user != null) {
-            return Response.ok(user.getId()).build();
+            return Response.ok(user).build();
         }
 
         return Response.status(Response.Status.UNAUTHORIZED).build();
