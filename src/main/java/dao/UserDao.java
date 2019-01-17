@@ -84,6 +84,8 @@ public class UserDao extends AbstractDaoImpl<User> {
                 user.setEmail(newEmail);
             }
 
+            update(user);
+
             return true;
         }
 
